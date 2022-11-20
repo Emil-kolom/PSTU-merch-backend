@@ -1,6 +1,7 @@
 package com.example.coursework4.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,19 +20,23 @@ public class Product {
     @Column(name = "img_dir_path")
     private String imgDirPath;
 
-    @Column(name = "category")
-//    @ForeignKey
-    private Integer category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category", referencedColumnName = "id")
+    private ProductCategory category;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<Warehouse> warehouses;
 
     public Product() {
     }
 
-    public Product(Integer id, String name, String description, String imgDirPath, Integer category) {
+    public Product(Integer id, String name, String description, String imgDirPath, ProductCategory category, List<Warehouse> warehouses) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imgDirPath = imgDirPath;
         this.category = category;
+        this.warehouses = warehouses;
     }
 
     public Integer getId() {
@@ -66,12 +71,20 @@ public class Product {
         this.imgDirPath = imgDirPath;
     }
 
-    public Integer getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(Integer category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
+    }
+
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
+    }
+
+    public void setWarehouses(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
     }
 
     @Override
@@ -85,7 +98,8 @@ public class Product {
         if (!Objects.equals(name, product.name)) return false;
         if (!Objects.equals(description, product.description)) return false;
         if (!Objects.equals(imgDirPath, product.imgDirPath)) return false;
-        return Objects.equals(category, product.category);
+        if (!Objects.equals(category, product.category)) return false;
+        return Objects.equals(warehouses, product.warehouses);
     }
 
     @Override
@@ -95,6 +109,7 @@ public class Product {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (imgDirPath != null ? imgDirPath.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (warehouses != null ? warehouses.hashCode() : 0);
         return result;
     }
 }

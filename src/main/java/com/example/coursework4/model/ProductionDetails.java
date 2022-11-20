@@ -10,13 +10,14 @@ import java.util.Objects;
 public class ProductionDetails {
 
     @Id
-    @Column(name = "product_id")
-//    @ForeignKey
-    private Integer productId;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 
     @Id
-    @Column(name = "production_id")
-    private Integer productionId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "production_id", referencedColumnName = "id")
+    private Production production;
 
     @Column(name = "size")
     private String size;
@@ -27,27 +28,27 @@ public class ProductionDetails {
     public ProductionDetails() {
     }
 
-    public ProductionDetails(Integer productId, Integer productionId, String size, Integer quantity) {
-        this.productId = productId;
-        this.productionId = productionId;
+    public ProductionDetails(Product product, Production production, String size, Integer quantity) {
+        this.product = product;
+        this.production = production;
         this.size = size;
         this.quantity = quantity;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product productId) {
+        this.product = productId;
     }
 
-    public Integer getProductionId() {
-        return productionId;
+    public Production getProduction() {
+        return production;
     }
 
-    public void setProductionId(Integer productionId) {
-        this.productionId = productionId;
+    public void setProduction(Production productionId) {
+        this.production = productionId;
     }
 
     public String getSize() {
@@ -73,16 +74,16 @@ public class ProductionDetails {
 
         ProductionDetails that = (ProductionDetails) o;
 
-        if (!Objects.equals(productId, that.productId)) return false;
-        if (!Objects.equals(productionId, that.productionId)) return false;
+        if (!Objects.equals(product, that.product)) return false;
+        if (!Objects.equals(production, that.production)) return false;
         if (!Objects.equals(size, that.size)) return false;
         return Objects.equals(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        int result = productId != null ? productId.hashCode() : 0;
-        result = 31 * result + (productionId != null ? productionId.hashCode() : 0);
+        int result = product != null ? product.hashCode() : 0;
+        result = 31 * result + (production != null ? production.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;

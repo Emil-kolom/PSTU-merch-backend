@@ -2,6 +2,7 @@ package com.example.coursework4.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,8 +12,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "client")
-    private Integer clientId;
+    @OneToOne(cascade = CascadeType.ALL) //fetch
+    @JoinColumn(name = "client", referencedColumnName = "id")
+    private Client client;
 
     @Column(name = "address")
     private String address;
@@ -32,18 +34,22 @@ public class Order {
     @Column(name = "delivery_number")
     private String deliveryNumber;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    private List<OrderDetails> orderDetailsList;
+
     public Order() {
     }
 
-    public Order(Integer id, Integer clientId, String address, String note, Double deliveryPrice, LocalDateTime orderDate, LocalDateTime shipmentDate, String deliveryNumber) {
+    public Order(Integer id, Client client, String address, String note, Double deliveryPrice, LocalDateTime orderDate, LocalDateTime shipmentDate, String deliveryNumber, List<OrderDetails> orderDetailsList) {
         this.id = id;
-        this.clientId = clientId;
+        this.client = client;
         this.address = address;
         this.note = note;
         this.deliveryPrice = deliveryPrice;
         this.orderDate = orderDate;
         this.shipmentDate = shipmentDate;
         this.deliveryNumber = deliveryNumber;
+        this.orderDetailsList = orderDetailsList;
     }
 
     public Integer getId() {
@@ -54,12 +60,12 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(Integer clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getAddress() {
@@ -110,6 +116,14 @@ public class Order {
         this.deliveryNumber = deliveryNumber;
     }
 
+    public List<OrderDetails> getOrderDetailsList() {
+        return orderDetailsList;
+    }
+
+    public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
+        this.orderDetailsList = orderDetailsList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,26 +132,29 @@ public class Order {
         Order order = (Order) o;
 
         if (!Objects.equals(id, order.id)) return false;
-        if (!Objects.equals(clientId, order.clientId)) return false;
+        if (!Objects.equals(client, order.client)) return false;
         if (!Objects.equals(address, order.address)) return false;
         if (!Objects.equals(note, order.note)) return false;
         if (!Objects.equals(deliveryPrice, order.deliveryPrice))
             return false;
         if (!Objects.equals(orderDate, order.orderDate)) return false;
         if (!Objects.equals(shipmentDate, order.shipmentDate)) return false;
-        return Objects.equals(deliveryNumber, order.deliveryNumber);
+        if (!Objects.equals(deliveryNumber, order.deliveryNumber))
+            return false;
+        return Objects.equals(orderDetailsList, order.orderDetailsList);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (clientId != null ? clientId.hashCode() : 0);
+        result = 31 * result + (client != null ? client.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (note != null ? note.hashCode() : 0);
         result = 31 * result + (deliveryPrice != null ? deliveryPrice.hashCode() : 0);
         result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
         result = 31 * result + (shipmentDate != null ? shipmentDate.hashCode() : 0);
         result = 31 * result + (deliveryNumber != null ? deliveryNumber.hashCode() : 0);
+        result = 31 * result + (orderDetailsList != null ? orderDetailsList.hashCode() : 0);
         return result;
     }
 }

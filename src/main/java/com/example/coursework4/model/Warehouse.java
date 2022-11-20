@@ -10,9 +10,9 @@ import java.util.Objects;
 public class Warehouse {
 
     @Id
-    @Column(name = "product")
-//    @ForeignKey
-    private Integer productId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product", referencedColumnName = "id")
+    private Product product;
 
     @Id
     @Column(name = "size")
@@ -24,18 +24,18 @@ public class Warehouse {
     public Warehouse() {
     }
 
-    public Warehouse(Integer productId, String size, Integer count) {
-        this.productId = productId;
+    public Warehouse(Product product, String size, Integer count) {
+        this.product = product;
         this.size = size;
         this.count = count;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer product_id) {
-        this.productId = product_id;
+    public void setProduct(Product product_id) {
+        this.product = product_id;
     }
 
     public String getSize() {
@@ -61,14 +61,14 @@ public class Warehouse {
 
         Warehouse warehouse = (Warehouse) o;
 
-        if (!productId.equals(warehouse.productId)) return false;
+        if (!product.equals(warehouse.product)) return false;
         if (!Objects.equals(size, warehouse.size)) return false;
         return count.equals(warehouse.count);
     }
 
     @Override
     public int hashCode() {
-        int result = productId.hashCode();
+        int result = product.hashCode();
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + count.hashCode();
         return result;

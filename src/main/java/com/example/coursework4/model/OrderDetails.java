@@ -10,13 +10,14 @@ import java.util.Objects;
 public class OrderDetails {
 
     @Id
-    @Column(name = "product_id")
-//    @ForeignKey
-    private Integer productId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 
     @Id
-    @Column(name = "order_id")
-    private Integer orderId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 
     @Column(name = "size")
     private String size;
@@ -30,28 +31,28 @@ public class OrderDetails {
     public OrderDetails() {
     }
 
-    public OrderDetails(Integer productId, Integer orderId, String size, Integer quantity, Double price) {
-        this.productId = productId;
-        this.orderId = orderId;
+    public OrderDetails(Product product, Order order, String size, Integer quantity, Double price) {
+        this.product = product;
+        this.order = order;
         this.size = size;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product productId) {
+        this.product = productId;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order orderId) {
+        this.order = orderId;
     }
 
     public String getSize() {
@@ -85,8 +86,8 @@ public class OrderDetails {
 
         OrderDetails that = (OrderDetails) o;
 
-        if (!Objects.equals(productId, that.productId)) return false;
-        if (!Objects.equals(orderId, that.orderId)) return false;
+        if (!Objects.equals(product, that.product)) return false;
+        if (!Objects.equals(order, that.order)) return false;
         if (!Objects.equals(size, that.size)) return false;
         if (!Objects.equals(quantity, that.quantity)) return false;
         return Objects.equals(price, that.price);
@@ -94,8 +95,8 @@ public class OrderDetails {
 
     @Override
     public int hashCode() {
-        int result = productId != null ? productId.hashCode() : 0;
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
+        int result = product != null ? product.hashCode() : 0;
+        result = 31 * result + (order != null ? order.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
