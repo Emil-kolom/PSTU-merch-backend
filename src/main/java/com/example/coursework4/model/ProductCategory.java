@@ -20,15 +20,16 @@ public class ProductCategory {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
     private List<Product> productList;
 
-    public ProductCategory(List<Product> productList) {
-        this.productList = productList;
-    }
 
     public ProductCategory(Integer id, String name, String url, List<Product> productList) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.productList = productList;
+    }
+
+    public ProductCategory() {
+
     }
 
     public Integer getId() {
