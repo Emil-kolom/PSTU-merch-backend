@@ -8,19 +8,19 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "role")
-    String role;
+    private String role;
 
     @Column(name = "password")
-    String password;
+    private String password;
 
     @Column(name = "email")
-    String email;
+    private String email;
 
 
     public User(Integer id, String name, String role, String password, String email) {

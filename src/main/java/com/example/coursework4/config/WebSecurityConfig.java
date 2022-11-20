@@ -2,6 +2,7 @@ package com.example.coursework4.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -18,9 +19,16 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/api/product", "/home").permitAll()
-                        .anyRequest().authenticated()
-                );
+                        .antMatchers(HttpMethod.GET,"/api/*").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/*").authenticated()
+                        .antMatchers(HttpMethod.DELETE, "/api/*").authenticated()
+                        .antMatchers(HttpMethod.PUT, "/api/*").authenticated()
+                        .anyRequest().permitAll()
+                ).exceptionHandling()
+                .and()
+                .formLogin()
+                .and()
+                .logout();
 
         return http.build();
     }
