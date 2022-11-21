@@ -1,5 +1,10 @@
 package com.example.coursework4.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -20,8 +25,12 @@ public class Product {
     @Column(name = "img_dir_path")
     private String imgDirPath;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "category", referencedColumnName = "id")
+//    @JsonIdentityInfo(
+//            generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+    @JsonBackReference
     private ProductCategory category;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")

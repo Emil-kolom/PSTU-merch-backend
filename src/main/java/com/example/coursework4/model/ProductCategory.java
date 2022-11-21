@@ -1,5 +1,7 @@
 package com.example.coursework4.model;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +20,11 @@ public class ProductCategory {
     private String url;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
+//    @JsonIdentityInfo(
+//            generator = ObjectIdGenerators.PropertyGenerator.class,
+//            property = "id")
+    @JsonManagedReference
+    @JsonIgnore
     private List<Product> productList;
 
 
@@ -56,6 +63,7 @@ public class ProductCategory {
         this.url = url;
     }
 
+    @JsonIgnore
     public List<Product> getProductList() {
         return productList;
     }
