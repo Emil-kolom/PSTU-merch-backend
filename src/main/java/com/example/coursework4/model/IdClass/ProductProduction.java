@@ -1,18 +1,21 @@
 package com.example.coursework4.model.IdClass;
 
+import com.example.coursework4.model.Product;
+import com.example.coursework4.model.Production;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class ProductProduction implements Serializable {
-    private Integer productId;
-    private Integer productionId;
+    private Product product;
+    private Production production;
 
     public ProductProduction() {
     }
 
-    public ProductProduction(Integer productId, Integer productionId) {
-        this.productId = productId;
-        this.productionId = productionId;
+    public ProductProduction(Product product, Production production) {
+        this.product = product;
+        this.production = production;
     }
 
     @Override
@@ -22,14 +25,14 @@ public class ProductProduction implements Serializable {
 
         ProductProduction that = (ProductProduction) o;
 
-        if (!Objects.equals(productId, that.productId)) return false;
-        return Objects.equals(productionId, that.productionId);
+        if (!Objects.equals(product, that.product)) return false;
+        return Objects.equals(production, that.production);
     }
 
     @Override
     public int hashCode() {
-        int result = productId != null ? productId.hashCode() : 0;
-        result = 31 * result + (productionId != null ? productionId.hashCode() : 0);
+        int result = product != null ? product.hashCode() : 0;
+        result = 31 * result + (production != null ? production.hashCode() : 0);
         return result;
     }
 }

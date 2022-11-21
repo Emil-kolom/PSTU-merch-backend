@@ -1,19 +1,21 @@
 package com.example.coursework4.model.IdClass;
 
+import com.example.coursework4.model.Product;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class ProductSize implements Serializable {
 
-    private Integer productId;
+    private Product product;
 
     private String size;
 
     public ProductSize() {
     }
 
-    public ProductSize(Integer product_id, String size) {
-        this.productId = product_id;
+    public ProductSize(Product product, String size) {
+        this.product = product;
         this.size = size;
     }
 
@@ -24,13 +26,13 @@ public class ProductSize implements Serializable {
 
         ProductSize that = (ProductSize) o;
 
-        if (!Objects.equals(productId, that.productId)) return false;
+        if (!Objects.equals(product, that.product)) return false;
         return Objects.equals(size, that.size);
     }
 
     @Override
     public int hashCode() {
-        int result = productId != null ? productId.hashCode() : 0;
+        int result = product != null ? product.hashCode() : 0;
         result = 31 * result + (size != null ? size.hashCode() : 0);
         return result;
     }

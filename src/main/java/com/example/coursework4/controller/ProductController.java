@@ -2,6 +2,8 @@ package com.example.coursework4.controller;
 
 import com.example.coursework4.model.Product;
 import com.example.coursework4.model.User;
+import com.example.coursework4.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,6 @@ public class ProductController {
     @GetMapping
     @ResponseBody()
     public User getProduct(@PathParam("id") Integer id){
-
         return new User();
     }
 }
