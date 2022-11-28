@@ -21,13 +21,17 @@ public class Warehouse {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "price")
+    private Double price;
+
     public Warehouse() {
     }
 
-    public Warehouse(Product product, String size, Integer count) {
+    public Warehouse(Product product, String size, Integer count, Double price) {
         this.product = product;
         this.size = size;
         this.count = count;
+        this.price = price;
     }
 
     public Product getProduct() {
@@ -54,6 +58,14 @@ public class Warehouse {
         this.count = count;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,16 +73,18 @@ public class Warehouse {
 
         Warehouse warehouse = (Warehouse) o;
 
-        if (!product.equals(warehouse.product)) return false;
+        if (!Objects.equals(product, warehouse.product)) return false;
         if (!Objects.equals(size, warehouse.size)) return false;
-        return count.equals(warehouse.count);
+        if (!Objects.equals(count, warehouse.count)) return false;
+        return Objects.equals(price, warehouse.price);
     }
 
     @Override
     public int hashCode() {
-        int result = product.hashCode();
+        int result = product != null ? product.hashCode() : 0;
         result = 31 * result + (size != null ? size.hashCode() : 0);
-        result = 31 * result + count.hashCode();
+        result = 31 * result + (count != null ? count.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.coursework4.controller;
 
+import com.example.coursework4.DTO.ProductActualDto;
+import com.example.coursework4.model.ErrorResponseObject;
 import com.example.coursework4.model.Product;
 import com.example.coursework4.model.User;
 import com.example.coursework4.service.EmailService;
@@ -20,12 +22,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public Product getProduct(@PathParam("id") Integer id){
+    public ProductActualDto getProduct(@PathParam("id") Integer id){
         return productService.getProductById(id);
     }
 
     @ExceptionHandler
-    private ResponseEntity<String> errorResponse(ResponseStatusException e) {
-        return new ResponseEntity<>(e.getReason(), e.getStatus());
+    private ResponseEntity<ErrorResponseObject> errorResponse(ResponseStatusException e) {
+
+        return new ResponseEntity<>(new ErrorResponseObject(e.getReason()), e.getStatus());
     }
 }
