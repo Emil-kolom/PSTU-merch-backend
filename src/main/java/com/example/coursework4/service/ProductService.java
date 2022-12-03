@@ -10,12 +10,14 @@ import com.example.coursework4.repository.ProductRepository;
 import com.example.coursework4.repository.WarehouseRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -34,10 +36,12 @@ public class ProductService {
         return productCategoryRepository.findAll();
     }
 
-    public List<Product> getAllProductByCategory(String path) {
-        return productCategoryRepository.findByUrl(path)
+    public List<ProductActualDto> getAllProductByCategory(String path) {
+        List<Product> productList = productCategoryRepository.findByUrl(path)
                 .map(ProductCategory::getProductList)
                 .orElse(new ArrayList<>());
+        List<ProductActualDto> resList = productList.stream().map((this::convertToProductActualDTO)).toList();
+        return resList;
     }
 
     public ProductActualDto getProductById(Integer id) throws ResponseStatusException {
@@ -67,4 +71,10 @@ public class ProductService {
         return productActualDto;
     }
 
+    public ProductCategory getCategoryByUrl(String path) {
+        return productCategoryRepository.findByUrl(path).orElseThrow(() -> {
+        throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "category not found");
+        });
+    }
 }

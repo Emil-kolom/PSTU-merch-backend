@@ -19,6 +19,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
+                        .antMatchers(HttpMethod.POST, "/api/order-placement").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/order-placement").authenticated()
                         .antMatchers(HttpMethod.GET,"/api/*").permitAll()
                         .antMatchers(HttpMethod.POST, "/api/*").authenticated()
                         .antMatchers(HttpMethod.DELETE, "/api/*").authenticated()

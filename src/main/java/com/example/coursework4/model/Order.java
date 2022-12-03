@@ -34,14 +34,16 @@ public class Order {
     @Column(name = "delivery_number")
     private String deliveryNumber;
 
+    @Column(name = "email")
+    private String email;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     private List<OrderDetails> orderDetailsList;
 
     public Order() {
     }
 
-    public Order(Integer id, Client client, String address, String note, Double deliveryPrice, LocalDateTime orderDate, LocalDateTime shipmentDate, String deliveryNumber, List<OrderDetails> orderDetailsList) {
-        this.id = id;
+    public Order(Client client, String address, String note, Double deliveryPrice, LocalDateTime orderDate, LocalDateTime shipmentDate, String deliveryNumber, String email, List<OrderDetails> orderDetailsList) {
         this.client = client;
         this.address = address;
         this.note = note;
@@ -49,6 +51,7 @@ public class Order {
         this.orderDate = orderDate;
         this.shipmentDate = shipmentDate;
         this.deliveryNumber = deliveryNumber;
+        this.email = email;
         this.orderDetailsList = orderDetailsList;
     }
 
@@ -124,6 +127,14 @@ public class Order {
         this.orderDetailsList = orderDetailsList;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,6 +152,7 @@ public class Order {
         if (!Objects.equals(shipmentDate, order.shipmentDate)) return false;
         if (!Objects.equals(deliveryNumber, order.deliveryNumber))
             return false;
+        if (!Objects.equals(email, order.email)) return false;
         return Objects.equals(orderDetailsList, order.orderDetailsList);
     }
 
@@ -154,6 +166,7 @@ public class Order {
         result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
         result = 31 * result + (shipmentDate != null ? shipmentDate.hashCode() : 0);
         result = 31 * result + (deliveryNumber != null ? deliveryNumber.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (orderDetailsList != null ? orderDetailsList.hashCode() : 0);
         return result;
     }

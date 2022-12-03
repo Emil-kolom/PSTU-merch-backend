@@ -25,8 +25,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(Integer id, String firstName, String secondName, String middleName, String phoneNumber) {
-        this.id = id;
+    public Client(String firstName, String secondName, String middleName, String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.middleName = middleName;

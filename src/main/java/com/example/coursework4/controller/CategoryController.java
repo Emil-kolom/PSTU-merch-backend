@@ -1,5 +1,6 @@
 package com.example.coursework4.controller;
 
+import com.example.coursework4.DTO.ProductActualDto;
 import com.example.coursework4.model.Product;
 import com.example.coursework4.model.ProductCategory;
 import com.example.coursework4.service.ProductService;
@@ -19,12 +20,17 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<ProductCategory> getCategory(){
+    public List<ProductCategory> getListCategories(){
         return productService.getProductCategories();
     }
 
     @GetMapping("/{path}")
-    public List<Product> getProductList(@PathVariable(value = "path") String path){
+    public List<ProductActualDto> getProductList(@PathVariable(value = "path") String path){
         return productService.getAllProductByCategory(path);
+    }
+
+    @GetMapping("/info")
+    public ProductCategory  getCategory(@PathParam(value = "path") String path){
+        return productService.getCategoryByUrl(path);
     }
 }
