@@ -65,6 +65,7 @@ public class OrderService {
                             warehouseRepository.findByProductAndSize(product,
                                     productInfo.getSize()).getPrice()));
         }
+
         order.setOrderDetailsList(productList);
 
         orderRepository.save(order);

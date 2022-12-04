@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-@ResponseBody
+import java.util.ArrayList;
+
+@RestController
 @RequestMapping("/api/order-placement")
 public class OrderPlacementController
 {
@@ -21,12 +23,14 @@ public class OrderPlacementController
     }
 
     @GetMapping
-    public Order getOrders(){
-        return null;
+    public OrderPlacementDto getOrders(){
+
+        return new OrderPlacementDto("","","","",
+                false,false,"","","","",new ArrayList<>());
     }
 
     @PostMapping
-    public ResponseEntity<String> placementNewOrder(OrderPlacementDto orderPlacementDto){
+    public ResponseEntity<String> placementNewOrder(@RequestBody OrderPlacementDto orderPlacementDto){
         orderService.placeOrder(orderPlacementDto);
         return new ResponseEntity<>("Successful order placement", HttpStatus.OK);
     }

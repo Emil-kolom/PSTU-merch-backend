@@ -11,12 +11,12 @@ import java.util.Objects;
  */
 public class ProductActualDto implements Serializable {
 
-    private final Integer id;
-    private final String name;
-    private final String description;
-    private final String imgDirPath;
-    private final ProductCategory category;
-    private final List<WarehouseDto> warehouses;
+    private Integer id;
+    private String name;
+    private String description;
+    private String imgDirPath;
+    private ProductCategory category;
+    private List<WarehouseDto> warehouses;
 
     public ProductActualDto(Integer id, String name, String description, String imgDirPath, ProductCategory category, List<WarehouseDto> warehouses) {
         this.id = id;
@@ -24,6 +24,33 @@ public class ProductActualDto implements Serializable {
         this.description = description;
         this.imgDirPath = imgDirPath;
         this.category = category;
+        this.warehouses = warehouses;
+    }
+
+    public ProductActualDto() {
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImgDirPath(String imgDirPath) {
+        this.imgDirPath = imgDirPath;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
+    public void setWarehouses(List<WarehouseDto> warehouses) {
         this.warehouses = warehouses;
     }
 

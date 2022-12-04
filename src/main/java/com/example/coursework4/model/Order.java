@@ -5,11 +5,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "order_table")
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @OneToOne(cascade = CascadeType.ALL) //fetch
@@ -37,7 +37,7 @@ public class Order {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetails> orderDetailsList;
 
     public Order() {

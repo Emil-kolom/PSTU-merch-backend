@@ -5,32 +5,28 @@ import java.util.List;
 import java.util.Objects;
 
 public class OrderPlacementDto implements Serializable {
-    private final String firstName;
-    private final String secondName;
-    private final String middleName;
-    private final String phoneNumber;
-    private final Boolean isNeedCall;
-    private final Boolean homeDelivery;
-    private final String deliveryCompany;
-    private final String email;
-    private final String address;
-    private final String note;
+    private String firstName;
+    private String secondName;
+    private String middleName;
+    private String phoneNumber;
+    private Boolean isNeedCall;
+    private Boolean homeDelivery;
+    private String deliveryCompany;
+    private String email;
+    private String address;
+    private String note;
 
-    private final List<ProductInOrder> productInOrderList;
+    private List<ProductInOrder> productInOrderList;
 
-    public class ProductInOrder{
+    public static class ProductInOrder implements Serializable {
         private final Integer id;
         private final String size;
         private final Integer quantity;
 
-        public ProductInOrder(Integer id, String size, Integer quantity) {
-            this.id = id;
+        public ProductInOrder(String size, Integer quantity, Integer id) {
             this.size = size;
             this.quantity = quantity;
-        }
-
-        public Integer getId() {
-            return id;
+            this.id = id;
         }
 
         public String getSize() {
@@ -41,24 +37,31 @@ public class OrderPlacementDto implements Serializable {
             return quantity;
         }
 
+        public Integer getId() {
+            return id;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
-            ProductInOrder that = (ProductInOrder) o;
-
-            if (!Objects.equals(id, that.id)) return false;
-            if (!Objects.equals(size, that.size)) return false;
-            return Objects.equals(quantity, that.quantity);
+            ProductInOrder entity = (ProductInOrder) o;
+            return Objects.equals(this.size, entity.size) &&
+                    Objects.equals(this.quantity, entity.quantity) &&
+                    Objects.equals(this.id, entity.id);
         }
 
         @Override
         public int hashCode() {
-            int result = id != null ? id.hashCode() : 0;
-            result = 31 * result + (size != null ? size.hashCode() : 0);
-            result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-            return result;
+            return Objects.hash(id, size, quantity);
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "(" +
+                    "id = " + id + ", " +
+                    "size = " + size + ", " +
+                    "quantity = " + quantity + ")";
         }
     }
 
@@ -73,6 +76,50 @@ public class OrderPlacementDto implements Serializable {
         this.email = email;
         this.address = address;
         this.note = note;
+        this.productInOrderList = productInOrderList;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setNeedCall(Boolean needCall) {
+        isNeedCall = needCall;
+    }
+
+    public void setHomeDelivery(Boolean homeDelivery) {
+        this.homeDelivery = homeDelivery;
+    }
+
+    public void setDeliveryCompany(String deliveryCompany) {
+        this.deliveryCompany = deliveryCompany;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public void setProductInOrderList(List<ProductInOrder> productInOrderList) {
         this.productInOrderList = productInOrderList;
     }
 
